@@ -63,7 +63,7 @@ npm install
 npm run dev
 ```
 
-The server will run on `http://localhost:3001`
+The server will run on `https://hitesh-lalwani-portfolio-backend.onrender.com/`
 
 ### 4. Start the Frontend
 
@@ -145,4 +145,3 @@ Update the frontend API URL to your production backend URL.
 4. **Deploy to production** when ready
 
 The backend is now ready to handle email sending from your portfolio contact form!
-

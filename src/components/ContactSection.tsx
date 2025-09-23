@@ -50,17 +50,23 @@ const ContactSection: FC = () => {
     try {
       console.log("form", form);
 
-      const response = await fetch("http://localhost:3001/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
-      });
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_BACKEND_BASE_URL ||
+          "https://hitesh-lalwani-portfolio-backend.onrender.com/"
+        }api/send-email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            message: form.message,
+          }),
+        }
+      );
 
       const result = await response.json();
       console.log("result", result);
