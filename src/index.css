@@ -32,6 +32,7 @@
 
   html {
     scroll-behavior: smooth;
+    height: 100%;
   }
 
   body {
@@ -40,9 +41,13 @@
     color: #f8f8f0;
     overflow-x: hidden;
     line-height: 1.6;
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(0, 170, 255, 0.02) 0%, transparent 50%);
+    min-height: 100%;
+    /* Removed background-image to prevent conflicts with AnimatedBackground */
+  }
+
+  #root {
+    min-height: 100vh;
+    position: relative;
   }
 
   h1, h2, h3, h4, h5, h6 {
