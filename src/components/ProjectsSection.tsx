@@ -171,10 +171,12 @@ const ProjectsSection: FC = () => {
     <section className="relative section-padding py-20 md:py-28">
       <div className="container-max">
         <div className="mb-10">
-          <p className="text-champagne uppercase tracking-widest text-sm mb-3">
+          <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-3">
             Projects
           </p>
-          <h2 className="text-4xl md:text-5xl font-fraunces">Selected work</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces">
+            Selected work
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -193,13 +195,15 @@ const ProjectsSection: FC = () => {
                 whileHover={{ y: -6, scale: 1.01 }}
                 className="text-left group glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors overflow-hidden"
               >
-                <div className="p-6 flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-fraunces text-xl text-ivory mb-1">
+                <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="font-fraunces text-lg sm:text-xl text-ivory mb-1">
                       {title}
                     </h3>
-                    <p className="text-muted-gray mb-1">{subtitle}</p>
-                    <p className="text-champagne text-sm mb-3">
+                    <p className="text-sm sm:text-base text-muted-gray mb-1">
+                      {subtitle}
+                    </p>
+                    <p className="text-champagne text-xs sm:text-sm mb-3">
                       {organization}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -213,11 +217,13 @@ const ProjectsSection: FC = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="text-champagne w-40 shrink-0">
+                  <div className="text-champagne w-full sm:w-40 shrink-0">
                     <Art />
                   </div>
                 </div>
-                <div className="px-6 pb-6 text-muted-gray">{description}</div>
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-sm sm:text-base text-muted-gray text-justify">
+                  {description}
+                </div>
               </motion.button>
             )
           )}
@@ -236,28 +242,32 @@ const ProjectsSection: FC = () => {
           >
             <motion.div
               onClick={(e) => e.stopPropagation()}
-              className="glass-effect max-w-2xl w-full rounded-2xl border border-white/10 overflow-hidden"
+              className="glass-effect max-w-2xl w-full rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto"
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
               transition={{ type: "spring", stiffness: 250, damping: 22 }}
             >
-              <div className="p-6 flex items-start gap-4">
-                <div className="text-champagne w-40 hidden md:block">
+              <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start gap-4">
+                <div className="text-champagne w-full sm:w-40 shrink-0">
                   <active.Art />
                 </div>
-                <div>
-                  <h3 className="font-fraunces text-2xl text-ivory mb-1">
+                <div className="flex-1">
+                  <h3 className="font-fraunces text-xl sm:text-2xl text-ivory mb-1">
                     {active.title}
                   </h3>
-                  <p className="text-muted-gray mb-1">{active.subtitle}</p>
-                  <p className="text-champagne text-sm mb-3">
+                  <p className="text-sm sm:text-base text-muted-gray mb-1">
+                    {active.subtitle}
+                  </p>
+                  <p className="text-champagne text-xs sm:text-sm mb-3">
                     {active.organization}
                   </p>
-                  <p className="text-muted-gray/90">{active.description}</p>
+                  <p className="text-sm sm:text-base text-muted-gray/90 text-justify">
+                    {active.description}
+                  </p>
                 </div>
               </div>
-              <div className="px-6 pb-6 flex flex-wrap gap-2">
+              <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex flex-wrap gap-2">
                 {active.tags.map((t) => (
                   <span
                     key={t}

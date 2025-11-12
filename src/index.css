@@ -33,6 +33,7 @@
   html {
     scroll-behavior: smooth;
     height: 100%;
+    cursor: none !important; /* Hide default cursor globally */
   }
 
   body {
@@ -42,7 +43,27 @@
     overflow-x: hidden;
     line-height: 1.6;
     min-height: 100%;
+    cursor: none !important; /* Hide default cursor when custom cursor is active */
     /* Removed background-image to prevent conflicts with AnimatedBackground */
+  }
+
+  /* Hide cursor on all elements */
+  * {
+    cursor: none !important;
+  }
+
+  /* Show default cursor on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    html, body, * {
+      cursor: auto !important;
+    }
+  }
+
+  /* Ensure custom cursor is always on top */
+  body > div[style*="z-index: 99999"] {
+    z-index: 99999 !important;
+    position: fixed !important;
+    pointer-events: none !important;
   }
 
   #root {
@@ -56,22 +77,32 @@
     line-height: 1.2;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar - Portfolio theme colors */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #1a1a1a;
+    background: #0a0a0a;
+    border-left: 1px solid rgba(0, 255, 136, 0.1);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #d4af37;
-    border-radius: 4px;
+    background: linear-gradient(180deg, #00ff88 0%, #00ffaa 100%);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #e6c547;
+    background: linear-gradient(180deg, #00ffaa 0%, #00ff88 100%);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #00ff88 #0a0a0a;
   }
 }
 
@@ -142,7 +173,15 @@
   }
 
   .container-max {
-    @apply max-w-7xl mx-auto;
+    @apply max-w-7xl mx-auto w-full;
+  }
+
+  /* Prevent text overflow on mobile */
+  @media (max-width: 640px) {
+    * {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   }
 }
 

@@ -127,8 +127,8 @@ const SkillsSection: FC = () => {
       <div className="container-max">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="text-champagne uppercase tracking-widest text-sm mb-3">Skills</p>
-            <h2 className="text-4xl md:text-5xl font-fraunces">Stack I build with</h2>
+            <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-3">Skills</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces">Stack I build with</h2>
           </div>
         </div>
 

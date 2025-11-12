@@ -106,8 +106,8 @@ const ToolsSection: FC = () => {
     <section className="relative section-padding py-20 md:py-28">
       <div className="container-max">
         <div className="mb-10">
-          <p className="text-champagne uppercase tracking-widest text-sm mb-3">Tools</p>
-          <h2 className="text-4xl md:text-5xl font-fraunces">Development environment</h2>
+          <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-3">Tools</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces">Development environment</h2>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">

@@ -38,8 +38,8 @@ const EducationSection: FC = () => {
     <section className="relative section-padding py-20 md:py-28">
       <div className="container-max">
         <div className="mb-10">
-          <p className="text-champagne uppercase tracking-widest text-sm mb-3">Education</p>
-          <h2 className="text-4xl md:text-5xl font-fraunces">Foundations</h2>
+          <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-3">Education</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces">Foundations</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -50,12 +50,12 @@ const EducationSection: FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: idx * 0.05 }}
-              className="glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors p-6 flex items-start gap-4"
+              className="glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors p-4 sm:p-6 flex items-start gap-3 sm:gap-4"
             >
-              <div className="text-champagne"><Logo /></div>
+              <div className="text-champagne shrink-0"><Logo /></div>
               <div>
-                <h3 className="font-fraunces text-xl text-ivory">{name}</h3>
-                <p className="text-muted-gray">{degree}</p>
+                <h3 className="font-fraunces text-lg sm:text-xl text-ivory mb-1">{name}</h3>
+                <p className="text-sm sm:text-base text-muted-gray">{degree}</p>
               </div>
             </motion.div>
           ))}

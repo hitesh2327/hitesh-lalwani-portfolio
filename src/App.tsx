@@ -9,10 +9,14 @@ import ContactSection from "./components/ContactSection";
 import ToolsSection from "./components/ToolsSection";
 import Navigation from "./components/Navigation";
 import AnimatedBackground from "./components/AnimatedBackground";
+import CustomCursor from "./components/CustomCursor";
 
 function App() {
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden">
+      {/* Custom Cursor */}
+      <CustomCursor />
+
       {/* Fixed Background Layer - z-0 */}
       <AnimatedBackground />
 

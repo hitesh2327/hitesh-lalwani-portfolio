@@ -50,17 +50,17 @@ const entries = [
 
 const ExperienceSection: FC = () => {
   return (
-    <section className="relative section-padding py-20 md:py-28">
-      <div className="container-max">
-        <div className="mb-12">
-          <p className="text-champagne uppercase tracking-widest text-sm mb-3">Experience</p>
-          <h2 className="text-4xl md:text-5xl font-fraunces">Where I shipped impact</h2>
+    <section className="relative section-padding py-16 sm:py-20 md:py-28">
+      <div className="container-max w-full">
+        <div className="mb-8 sm:mb-12">
+          <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-2 sm:mb-3">Experience</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-fraunces">Where I shipped impact</h2>
         </div>
 
         <div className="relative">
           {/* Gold animated thread */}
           <motion.div
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 -z-10"
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 -z-10 hidden md:block"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -73,11 +73,13 @@ const ExperienceSection: FC = () => {
             />
           </motion.div>
 
-          <div className="space-y-10">
+          <div className="space-y-6 sm:space-y-8 md:space-y-10">
             {entries.map(({ company, role, period, points, Logo }, idx) => (
-              <div key={company} className="grid grid-cols-[32px_1fr] md:grid-cols-[1fr_24px_1fr] items-start gap-6 md:gap-10">
-                {/* Dot / Marker */}
+              <div key={company} className="grid grid-cols-1 md:grid-cols-[1fr_24px_1fr] items-start gap-0 md:gap-6 lg:gap-10">
+                {/* Empty space for desktop timeline */}
                 <div className="hidden md:block" />
+                
+                {/* Timeline dot - only visible on desktop */}
                 <div className="hidden md:flex items-center justify-center">
                   <motion.div
                     className="w-3 h-3 rounded-full bg-champagne shadow-[0_0_12px_rgba(212,175,55,0.6)]"
@@ -88,24 +90,29 @@ const ExperienceSection: FC = () => {
                   />
                 </div>
 
-                {/* Card */}
+                {/* Card - full width on mobile */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.4 }}
                   transition={{ duration: 0.6, delay: idx * 0.05 }}
-                  className="glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors p-6"
+                  className="glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors p-4 sm:p-6 w-full"
                 >
-                  <div className="flex items-center gap-4 mb-3 text-champagne">
-                    <Logo />
-                    <div>
-                      <h3 className="font-fraunces text-xl text-ivory">{company}</h3>
-                      <p className="text-muted-gray">{role} <span className="text-champagne/60">{period}</span></p>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-3 text-champagne">
+                    <div className="shrink-0 w-8 h-8 sm:w-10 sm:h-10">
+                      <Logo />
+                    </div>
+                    <div className="flex-1 min-w-0 w-full">
+                      <h3 className="font-fraunces text-base sm:text-lg md:text-xl text-ivory mb-1.5 sm:mb-1 break-words leading-tight">{company}</h3>
+                      <p className="text-xs sm:text-sm md:text-base text-muted-gray leading-relaxed">
+                        <span className="block sm:inline">{role}</span>
+                        <span className="text-champagne/60 block sm:inline sm:ml-1 mt-0.5 sm:mt-0">{period}</span>
+                      </p>
                     </div>
                   </div>
-                  <ul className="list-disc list-inside text-muted-gray space-y-1">
+                  <ul className="list-disc list-inside text-xs sm:text-sm md:text-base text-muted-gray space-y-2 sm:space-y-1.5 md:space-y-2">
                     {points.map((p) => (
-                      <li key={p}>{p}</li>
+                      <li key={p} className="pl-1 sm:pl-2 text-justify break-words leading-relaxed">{p}</li>
                     ))}
                   </ul>
                 </motion.div>

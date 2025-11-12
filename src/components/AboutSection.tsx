@@ -36,14 +36,14 @@ const AboutSection = () => {
           {/* Copy */}
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={fadeIn}>
             <p className="text-champagne uppercase tracking-widest text-sm mb-4">About Me</p>
-            <h2 className="text-4xl md:text-5xl font-fraunces mb-6">Crafting reliable, beautiful products</h2>
-            <p className="text-muted-gray text-lg leading-relaxed mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces mb-6">Crafting reliable, beautiful products</h2>
+            <p className="text-muted-gray text-base sm:text-lg leading-relaxed mb-4 text-justify">
               I'm a developer with over 3 years of experience specializing in Node.js, React.js, and PostgreSQL. 
               I thrive in teamwork and have successfully integrated OpenAI, third-party WhatsApp, and TMDB APIs. 
               My standout moment was completing a difficult project on a tight deadline, where I developed a 
               React Native webview for both Android and iOS with multiple environment facilities.
             </p>
-            <p className="text-muted-gray leading-relaxed">
+            <p className="text-muted-gray text-base sm:text-lg leading-relaxed text-justify">
               I integrated push notifications using Firebase FNM, and successfully uploaded the iOS app to TestFlight, 
               enhancing our team's efficiency and project delivery. I handle complex backend development with 
               microservices, Kafka queues, and real-time systems.
@@ -51,7 +51,7 @@ const AboutSection = () => {
           </motion.div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
             {[
               { Icon: IconCode, title: 'Engineering', desc: 'Clean, modern, pragmatic' },
               { Icon: IconTeam, title: 'Collaboration', desc: 'Trusted, communicative, thoughtful' },

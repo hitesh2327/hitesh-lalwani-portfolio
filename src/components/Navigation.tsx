@@ -34,12 +34,12 @@ const Navigation: FC = () => {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-muted-gray hover:text-champagne transition-colors font-inter text-sm"
+                className="text-muted-gray hover:text-champagne transition-colors font-inter text-xs lg:text-sm"
               >
                 {item.name}
               </button>

@@ -94,11 +94,11 @@ const ContactSection: FC = () => {
     <section className="relative section-padding py-20 md:py-28">
       <div className="container-max">
         <div className="mb-10 text-center">
-          <p className="text-champagne uppercase tracking-widest text-sm mb-3">
+          <p className="text-champagne uppercase tracking-widest text-xs sm:text-sm mb-3">
             Contact
           </p>
-          <h2 className="text-4xl md:text-5xl font-fraunces">
-            Let’s work together
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces">
+            Let's work together
           </h2>
         </div>
 
@@ -110,7 +110,7 @@ const ContactSection: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="glass-effect rounded-2xl border border-white/10 p-6"
+            className="glass-effect rounded-2xl border border-white/10 p-4 sm:p-6"
           >
             <div className="grid grid-cols-1 gap-4">
               <div>
@@ -120,7 +120,7 @@ const ContactSection: FC = () => {
                 <input
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3"
+                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3 text-sm sm:text-base"
                   placeholder="Your name"
                 />
                 {errors.name && (
@@ -134,7 +134,7 @@ const ContactSection: FC = () => {
                 <input
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3"
+                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3 text-sm sm:text-base"
                   placeholder="you@example.com"
                 />
                 {errors.email && (
@@ -151,22 +151,22 @@ const ContactSection: FC = () => {
                     setForm({ ...form, message: e.target.value })
                   }
                   rows={5}
-                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3 resize-y"
+                  className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-champagne/60 outline-none px-4 py-3 resize-y text-sm sm:text-base"
                   placeholder="Tell me a bit about your project..."
                 />
                 {errors.message && (
                   <p className="text-xs text-red-400 mt-1">{errors.message}</p>
                 )}
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="relative px-6 py-3 rounded-full bg-champagne text-charcoal font-medium hover:bg-champagne-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative px-6 py-3 rounded-full bg-champagne text-charcoal font-medium hover:bg-champagne-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base w-full sm:w-auto"
                 >
                   {isLoading ? "Sending..." : sent ? "Sent!" : "Send Message"}
                 </button>
-                <p className="text-xs text-muted-gray">
+                <p className="text-xs text-muted-gray text-center sm:text-left">
                   Typically respond within 24 hours
                 </p>
               </div>
@@ -184,24 +184,24 @@ const ContactSection: FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass-effect rounded-2xl border border-white/10 p-6 flex flex-col justify-between"
+            className="glass-effect rounded-2xl border border-white/10 p-4 sm:p-6 flex flex-col justify-between"
           >
             <div>
-              <h3 className="font-fraunces text-2xl mb-2">Connect</h3>
-              <p className="text-muted-gray mb-4">
+              <h3 className="font-fraunces text-xl sm:text-2xl mb-2">Connect</h3>
+              <p className="text-sm sm:text-base text-muted-gray mb-4 text-justify">
                 Find me online and say hello.
               </p>
               <div className="mb-6 space-y-2">
-                <p className="text-sm text-muted-gray">
+                <p className="text-xs sm:text-sm text-muted-gray break-words">
                   📧 honeylalwani1999@gmail.com
                 </p>
-                <p className="text-sm text-muted-gray">📱 +91 6376580714</p>
+                <p className="text-xs sm:text-sm text-muted-gray">📱 +91 6376580714</p>
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
                   href="https://github.com/hitesh2327/"
                   target="_blank"
-                  className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory"
+                  className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory text-sm sm:text-base"
                 >
                   <span className="text-champagne group-hover:text-champagne-light transition-colors">
                     <IconGithub />
@@ -211,7 +211,7 @@ const ContactSection: FC = () => {
                 <a
                   href="https://www.linkedin.com/in/hitesh-lalwani-543565168"
                   target="_blank"
-                  className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory"
+                  className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory text-sm sm:text-base"
                 >
                   <span className="text-champagne group-hover:text-champagne-light transition-colors">
                     <IconLinkedIn />
