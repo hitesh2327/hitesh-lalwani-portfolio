@@ -38,15 +38,18 @@ const AboutSection = () => {
             <p className="text-champagne uppercase tracking-widest text-sm mb-4">About Me</p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-fraunces mb-6">Crafting reliable, beautiful products</h2>
             <p className="text-muted-gray text-base sm:text-lg leading-relaxed mb-4 text-justify">
-              I'm a developer with over 3 years of experience specializing in Node.js, React.js, and PostgreSQL. 
-              I thrive in teamwork and have successfully integrated OpenAI, third-party WhatsApp, and TMDB APIs. 
-              My standout moment was completing a difficult project on a tight deadline, where I developed a 
-              React Native webview for both Android and iOS with multiple environment facilities.
+              Full-Stack Developer with 4+ years of experience owning backend architecture and 
+              frontend delivery across AI-powered SaaS products, ISP platforms, and microservices 
+              ecosystems. I specialise in Node.js, Nest.js, React.js, and Python FastAPI — with a 
+              strong track record of shipping production-grade features, integrating GenAI workflows 
+              (LangChain, LangGraph, OpenAI), and driving measurable improvements in system 
+              performance, security, and developer velocity.
             </p>
             <p className="text-muted-gray text-base sm:text-lg leading-relaxed text-justify">
-              I integrated push notifications using Firebase FNM, and successfully uploaded the iOS app to TestFlight, 
-              enhancing our team's efficiency and project delivery. I handle complex backend development with 
-              microservices, Kafka queues, and real-time systems.
+              I thrive in Agile teams and take end-to-end ownership from API design to cloud 
+              deployment on AWS EC2. I've covered full sprint backlogs solo, reduced notification 
+              latency by ~60%, accelerated ISP onboarding by 35%, and delivered an AI interview 
+              platform from zero to production in 6 weeks.
             </p>
           </motion.div>
 
@@ -70,6 +73,31 @@ const AboutSection = () => {
                 </div>
                 <h3 className="font-fraunces text-xl mb-1">{title}</h3>
                 <p className="text-muted-gray text-sm">{desc}</p>
+              </motion.div>
+            ))}
+          </div>
+      </div>
+
+        {/* Achievements */}
+        <div className="mt-16 sm:mt-24">
+          <p className="text-champagne uppercase tracking-widest text-sm mb-6 text-center">Notable Achievements</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+            {[
+              { stat: '~60%', label: 'Reduction in notification latency' },
+              { stat: '35%', label: 'Faster ISP onboarding' },
+              { stat: '40%', label: 'Faster query response times' },
+              { stat: '6 Weeks', label: 'Zero to prod for AI interview platform' },
+            ].map(({ stat, label }, i) => (
+              <motion.div
+                key={stat}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="glass-effect p-6 rounded-2xl border border-white/10 text-center hover:border-champagne/40 transition-colors"
+              >
+                <h3 className="text-3xl sm:text-4xl font-fraunces text-champagne mb-2">{stat}</h3>
+                <p className="text-muted-gray text-xs sm:text-sm">{label}</p>
               </motion.div>
             ))}
           </div>

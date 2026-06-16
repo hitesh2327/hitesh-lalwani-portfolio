@@ -209,7 +209,7 @@ const ContactSection: FC = () => {
                   <span>GitHub</span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/hitesh-lalwani-543565168"
+                  href="https://www.linkedin.com/in/hitesh-lalwani-5435b5168"
                   target="_blank"
                   className="group inline-flex items-center gap-2 text-ivory/80 hover:text-ivory text-sm sm:text-base"
                 >

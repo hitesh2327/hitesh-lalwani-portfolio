@@ -23,12 +23,12 @@ const IconBook: FC = () => (
 const schools = [
   {
     name: 'Jai Narayan Vyas University',
-    degree: 'Bachelor of Computer Applications (2019-2022)',
+    degree: 'BCA (2019–2022)',
     Logo: IconCap,
   },
   {
     name: 'Bikaner Technical University',
-    degree: 'Master of Computer Applications (2022-2025)',
+    degree: 'Master of Computer Application (MCA) (2022–2025)',
     Logo: IconBook,
   },
 ]

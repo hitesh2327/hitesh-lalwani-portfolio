@@ -72,10 +72,10 @@ const HeroSection = () => {
 
         <motion.div variants={itemVariants} className="mb-8 sm:mb-12">
           <motion.p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-400 font-inter font-light max-w-4xl mx-auto leading-relaxed px-2" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.4, duration: 0.8 }}>
-            Software Engineer <span className="text-green-500 mx-2 sm:mx-4">•</span> React.js <span className="text-green-500 mx-1 sm:mx-2">•</span> Node.js <span className="text-green-500 mx-1 sm:mx-2">•</span> PostgreSQL
+            Full-Stack Developer <span className="text-green-500 mx-2 sm:mx-4">•</span> React.js <span className="text-green-500 mx-1 sm:mx-2">•</span> Node.js <span className="text-green-500 mx-1 sm:mx-2">•</span> PostgreSQL
           </motion.p>
           <motion.p className="text-sm sm:text-lg text-gray-500 font-inter font-light max-w-4xl mx-auto leading-relaxed mt-3 sm:mt-4 px-2" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.6, duration: 0.8 }}>
-            Jodhpur, Rajasthan • 3+ Years Experience
+            Jodhpur, Rajasthan • 4+ Years Experience
           </motion.p>
         </motion.div>
 

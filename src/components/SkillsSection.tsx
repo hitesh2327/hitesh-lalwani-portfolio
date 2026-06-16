@@ -108,17 +108,103 @@ const IconMongoDB: FC = () => (
   </svg>
 )
 
+const IconPython: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <path d="M32 12c-10 0-10 4-10 10v6h20v4H18c-12 0-12-8-12-16s0-16 12-16h16c10 0 10 4 10 10" />
+      <path d="M32 52c10 0 10-4 10-10v-6H22v-4h24c12 0 12 8 12 16s0 16-12 16H30c-10 0-10-4-10-10" />
+    </g>
+  </svg>
+)
+
+const IconLangchain: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <circle cx="20" cy="32" r="8" />
+      <circle cx="44" cy="32" r="8" />
+      <line x1="28" y1="32" x2="36" y2="32" />
+    </g>
+  </svg>
+)
+
+const IconAWS: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <path d="M10 40c10 10 24 10 44 0" />
+      <path d="M46 44l8-4-2-8" />
+      <path d="M22 28l10-12 10 12" />
+    </g>
+  </svg>
+)
+
+const IconDocker: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <path d="M12 36h40v12H12z" />
+      <rect x="20" y="24" width="8" height="8" />
+      <rect x="28" y="24" width="8" height="8" />
+      <rect x="36" y="24" width="8" height="8" />
+      <rect x="28" y="16" width="8" height="8" />
+    </g>
+  </svg>
+)
+
+const IconTS: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <rect x="12" y="12" width="40" height="40" rx="4" />
+      <path d="M22 28h12M28 28v16" />
+      <path d="M36 40c0 4 6 4 6 0s-6-4-6-8 6-4 6 0" />
+    </g>
+  </svg>
+)
+
+const IconSocket: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <circle cx="32" cy="32" r="20" />
+      <path d="M32 18v28M18 32h28" />
+    </g>
+  </svg>
+)
+
+const IconKong: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <polygon points="32,10 52,50 12,50" />
+      <circle cx="32" cy="36" r="6" />
+    </g>
+  </svg>
+)
+
+const IconGrafana: FC = () => (
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9">
+    <g fill="none" stroke="currentColor" strokeWidth="3">
+      <path d="M32 12a20 20 0 1 1-18 28" />
+      <rect x="26" y="26" width="12" height="12" />
+    </g>
+  </svg>
+)
+
 const skills: Skill[] = [
   { name: 'React.js', Icon: IconReact },
   { name: 'Node.js', Icon: IconNode },
   { name: 'Apollo GraphQL', Icon: IconGraphQL },
   { name: 'PostgreSQL', Icon: IconPostgres },
   { name: 'Nest.js', Icon: IconNest },
-  { name: 'Kafka Queue', Icon: IconKafka },
+  { name: 'Kafka', Icon: IconKafka },
   { name: 'Ant Design', Icon: IconAntDesign },
   { name: 'Git', Icon: IconGit },
   { name: 'React Native', Icon: IconReactNative },
   { name: 'MongoDB', Icon: IconMongoDB },
+  { name: 'Python FastAPI', Icon: IconPython },
+  { name: 'LangChain / LangGraph', Icon: IconLangchain },
+  { name: 'AWS EC2', Icon: IconAWS },
+  { name: 'Docker', Icon: IconDocker },
+  { name: 'TypeScript', Icon: IconTS },
+  { name: 'Socket.io', Icon: IconSocket },
+  { name: 'Kong API Gateway', Icon: IconKong },
+  { name: 'Prometheus / Grafana', Icon: IconGrafana },
 ]
 
 const SkillsSection: FC = () => {

@@ -1,3 +1,5 @@
+// src/components/CustomCursor.tsx
+
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -8,18 +10,14 @@ const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Smooth spring values for tail effect
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
   const springConfig = { damping: 25, stiffness: 700 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  // Tail positions
   const tailPositions = useRef<Array<{ x: number; y: number }>>([]);
-  const [tailPoints, setTailPoints] = useState<Array<{ x: number; y: number }>>(
-    []
-  );
+  const [tailPoints, setTailPoints] = useState<Array<{ x: number; y: number }>>([]);
 
   const updateMousePosition = useCallback(
     (e: MouseEvent) => {
@@ -29,12 +27,10 @@ const CustomCursor = () => {
       cursorX.set(x);
       cursorY.set(y);
 
-      // Update tail positions
       tailPositions.current.unshift({ x, y });
-      if (tailPositions.current.length > 10) {
+      if (tailPositions.current.length > 8) {
         tailPositions.current.pop();
       }
-      // Use requestAnimationFrame for smoother updates
       requestAnimationFrame(() => {
         setTailPoints([...tailPositions.current]);
       });
@@ -45,17 +41,20 @@ const CustomCursor = () => {
   useEffect(() => {
     setMounted(true);
 
-    // Only show custom cursor on desktop (not touch devices)
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) {
-      // Re-enable cursor on touch devices
       document.documentElement.style.cursor = "auto";
       document.body.style.cursor = "auto";
       return;
     }
 
-    // Ensure cursor is hidden
+    // Hide ALL cursors globally
+    const style = document.createElement("style");
+    style.id = "custom-cursor-style";
+    style.innerHTML = `* { cursor: none !important; }`;
+    document.head.appendChild(style);
+
     document.documentElement.style.cursor = "none";
     document.body.style.cursor = "none";
     setIsVisible(true);
@@ -78,12 +77,9 @@ const CustomCursor = () => {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    // Use event delegation for better performance
     document.addEventListener("mouseover", handleMouseEnter);
     document.addEventListener("mouseout", handleMouseLeave);
-    window.addEventListener("mousemove", updateMousePosition, {
-      passive: true,
-    });
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
 
@@ -93,30 +89,56 @@ const CustomCursor = () => {
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-      // Restore cursor on cleanup
       document.documentElement.style.cursor = "auto";
       document.body.style.cursor = "auto";
+      const injected = document.getElementById("custom-cursor-style");
+      if (injected) document.head.removeChild(injected);
     };
   }, [updateMousePosition]);
 
   if (!mounted) return null;
+
   if (!isVisible) {
-    // Still render empty div to maintain portal
     return mounted && typeof document !== "undefined"
       ? createPortal(
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              pointerEvents: "none",
-              zIndex: 99999,
-            }}
-          />,
-          document.body
-        )
+        <div style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 99999 }} />,
+        document.body
+      )
       : null;
   }
+
+  // Pixel arrow: each cell is 3x3px, cursor is 12x14 pixels = 36x42px total
+  // Pixel map: 1 = green fill, 2 = highlight, 0 = transparent, B = dark border
+  const B = "B", G = "G", H = "H", _ = "_";
+  type Cell = "B" | "G" | "H" | "_";
+
+  const pixelMap: Cell[][] = [
+    [B, _, _, _, _, _, _, _, _, _, _, _],
+    [B, B, _, _, _, _, _, _, _, _, _, _],
+    [B, G, B, _, _, _, _, _, _, _, _, _],
+    [B, H, G, B, _, _, _, _, _, _, _, _],
+    [B, H, G, G, B, _, _, _, _, _, _, _],
+    [B, H, G, G, G, B, _, _, _, _, _, _],
+    [B, H, G, G, G, G, B, _, _, _, _, _],
+    [B, H, G, G, G, G, G, B, _, _, _, _],
+    [B, H, G, G, G, G, G, G, B, _, _, _],
+    [B, H, G, G, G, G, B, B, _, _, _, _],
+    [B, H, G, G, B, G, B, _, _, _, _, _],
+    [B, H, G, B, _, B, G, B, _, _, _, _],
+    [B, B, B, _, _, _, B, G, B, _, _, _],
+    [_, _, _, _, _, _, _, B, B, _, _, _],
+  ];
+
+  const cellSize = 3;
+  const svgW = 12 * cellSize;
+  const svgH = 14 * cellSize;
+
+  const colorMap: Record<Cell, string | null> = {
+    B: "#061a0e",   // very dark green-black border (replaces pure black, theme-synced)
+    G: "#39ff7a",   // primary green
+    H: "#7affaa",   // highlight — lighter green for top-left 3D edge
+    _: null,        // transparent
+  };
 
   const cursorContent = (
     <div
@@ -129,58 +151,44 @@ const CustomCursor = () => {
         willChange: "transform",
       }}
     >
-      {/* Tail dots - Multiple trailing points with smooth animation */}
+      {/* Trailing tail dots */}
       {tailPoints.map((point, index) => {
-        const size = Math.max(2, 6 - index * 0.5);
-        const opacity = Math.max(0.1, 0.5 - index * 0.05);
-        const springDelay = index * 0.03;
+        const size = Math.max(2, 5 - index * 0.4);
+        const opacity = Math.max(0.05, 0.4 - index * 0.05);
 
         return (
           <motion.div
             key={`tail-${index}`}
-            className="absolute rounded-full"
             style={{
+              position: "absolute",
+              borderRadius: "50%",
               width: `${size}px`,
               height: `${size}px`,
-              background: `radial-gradient(circle, rgba(0, 255, 136, ${opacity}) 0%, rgba(0, 255, 170, ${
-                opacity * 0.5
-              }) 100%)`,
-              boxShadow: `0 0 ${size * 2}px rgba(0, 255, 136, ${
-                opacity * 0.8
-              })`,
+              background: `rgba(57, 255, 122, ${opacity})`,
+              boxShadow: `0 0 ${size * 2}px rgba(57, 255, 122, ${opacity * 0.8})`,
             }}
-            initial={{
-              x: point.x - size / 2,
-              y: point.y - size / 2,
-              scale: 0,
-              opacity: 0,
-            }}
-            animate={{
-              x: point.x - size / 2,
-              y: point.y - size / 2,
-              scale: 1,
-              opacity: opacity,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 25,
-              mass: 0.3,
-              delay: springDelay,
-            }}
+            initial={{ x: point.x - size / 2, y: point.y - size / 2, scale: 0, opacity: 0 }}
+            animate={{ x: point.x - size / 2, y: point.y - size / 2, scale: 1, opacity }}
+            transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.3, delay: index * 0.02 }}
           />
         );
       })}
 
-      {/* Main Cursor - Code brackets with glow */}
+      {/* Pixel cursor */}
       <motion.div
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
-          transform: "translate(-20px, -20px)",
+          // Offset so hotspot is at top-left pixel (0,0)
+          translateX: "0px",
+          translateY: "0px",
+          filter: isHovering
+            ? "drop-shadow(0 0 8px rgba(57,255,122,0.95))"
+            : "drop-shadow(0 0 4px rgba(57,255,122,0.5))",
         }}
         animate={{
-          scale: isClicking ? 0.8 : isHovering ? 1.3 : 1,
+          scale: isClicking ? 0.85 : isHovering ? 1.25 : 1,
+          rotate: isClicking ? -8 : 0,
         }}
         transition={{
           type: "spring",
@@ -190,63 +198,59 @@ const CustomCursor = () => {
         }}
       >
         <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
+          width={svgW}
+          height={svgH}
+          viewBox={`0 0 ${svgW} ${svgH}`}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-[0_0_12px_rgba(0,255,136,0.9)]"
-          style={{ filter: "drop-shadow(0 0 8px rgba(0, 255, 136, 0.8))" }}
+          style={{ imageRendering: "pixelated", display: "block" }}
         >
-          {/* Outer glow */}
-          <circle
-            cx="20"
-            cy="20"
-            r="18"
-            fill="rgba(0, 255, 136, 0.15)"
-            className="animate-pulse"
-          />
-
-          {/* Code brackets */}
-          <g
-            stroke="#00ff88"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {/* Left bracket */}
-            <path d="M12 14 L8 20 L12 26" />
-            {/* Right bracket */}
-            <path d="M28 14 L32 20 L28 26" />
-            {/* Center dot */}
-            <circle cx="20" cy="20" r="2.5" fill="#00ff88" />
-          </g>
+          {pixelMap.map((row, rowIdx) =>
+            row.map((cell, colIdx) => {
+              const color = colorMap[cell];
+              if (!color) return null;
+              return (
+                <rect
+                  key={`${rowIdx}-${colIdx}`}
+                  x={colIdx * cellSize}
+                  y={rowIdx * cellSize}
+                  width={cellSize}
+                  height={cellSize}
+                  fill={color}
+                />
+              );
+            })
+          )}
         </svg>
       </motion.div>
 
-      {/* Outer ring - expands on hover */}
+      {/* Expand ring on hover — subtle green tint */}
       <motion.div
         style={{
+          position: "absolute",
           x: cursorXSpring,
           y: cursorYSpring,
-          transform: "translate(-15px, -15px)",
+          translateX: "-14px",
+          translateY: "-14px",
         }}
         animate={{
-          scale: isHovering ? 2.5 : 0,
-          opacity: isHovering ? 0.15 : 0,
+          scale: isHovering ? 2.8 : 0,
+          opacity: isHovering ? 0.12 : 0,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 25,
-        }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
-        <div className="w-[30px] h-[30px] rounded-full border-2 border-champagne/50" />
+        <div
+          style={{
+            width: "28px",
+            height: "28px",
+            borderRadius: "50%",
+            border: "1.5px solid rgba(57, 255, 122, 0.6)",
+          }}
+        />
       </motion.div>
     </div>
   );
 
-  // Render in a portal to ensure it's always on top
   return mounted && typeof document !== "undefined"
     ? createPortal(cursorContent, document.body)
     : null;

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, type FC } from "react";
+import { useState, useEffect, type FC } from "react";
+import { createPortal } from "react-dom";
 
 type Project = {
   title: string;
@@ -104,7 +105,7 @@ const projects: Project[] = [
     subtitle: "Broadband Management System for ISPs",
     organization: "Reliablesoft Technologies Pvt Ltd",
     description:
-      "A comprehensive BMS designed for Internet Service Providers using React.js, Node.js, GraphQL, PostgreSQL, and MongoDB. Offers real-time monitoring, remote issue management, billing, bandwidth management, and AAA solutions.",
+      "A comprehensive BMS designed for Internet Service Providers using React.js, Node.js, GraphQL, PostgreSQL, and MongoDB. Offers real-time monitoring, remote issue management, billing, bandwidth management, and AAA solutions. Overhauled GraphQL schema with DataLoader-based batching, eliminating N+1 query issues and reducing database load by 55% under peak ISP traffic. Rebuilt the React.js subscriber dashboard with real-time Socket.io updates, reducing fault-resolution time from 12 minutes to under 4 minutes.",
     tags: ["React.js", "Node.js", "GraphQL", "PostgreSQL", "MongoDB"],
     Art: ArtDashboard,
   },
@@ -131,7 +132,7 @@ const projects: Project[] = [
     subtitle: "Dynamic charting engine",
     organization: "Infoobjects Software Pvt Ltd",
     description:
-      "Developed backend services for a dynamic charting engine that generates various chart types from Excel/CSV datasets with centralized status management.",
+      "Engineered a streaming ingestion pipeline processing Excel/CSV files up to 50MB without blocking the main thread, using chunked reads and worker queues to cut peak memory usage by 60%. Extended the engine with 8 chart types configurable via a single JSON schema — reducing client customisation requests by 45%.",
     tags: ["Node.js", "Nest.js", "Data Processing", "Charts", "Excel/CSV"],
     Art: ArtVriti,
   },
@@ -162,10 +163,39 @@ const projects: Project[] = [
     tags: ["Next.js", "Security", "Database"],
     Art: ArtAI,
   },
+  {
+    title: "Kriva AI – Enterprise AI Workflow Platform",
+    subtitle: "Fault-tolerant microservices platform",
+    organization: "",
+    description:
+      "Structured a fault-tolerant microservices mesh using Consul for service discovery and Kong Gateway for authentication across 6 independent services — achieving 99.9% uptime SLA. Configured Prometheus alerting and Grafana dashboards, reducing mean time to detect production incidents from 15 minutes to under 3 minutes.",
+    tags: ["Nest.js", "GraphQL", "Kong API Gateway", "AWS EC2", "Prometheus", "Grafana", "Consul"],
+    Art: ArtDashboard,
+  },
+  {
+    title: "AI Threat Modelling Platform",
+    subtitle: "Automated security analysis platform",
+    organization: "",
+    description:
+      "Orchestrated multi-step LangGraph reasoning agents to automate threat identification across STRIDE and DREAD frameworks, reducing manual security-review time by 70%. Applied FastAPI async endpoints with connection pooling, supporting 200+ concurrent threat-analysis requests with sub-500ms response time.",
+    tags: ["React.js", "Python FastAPI", "PostgreSQL", "LangChain", "LangGraph", "OpenAI API", "AWS EC2"],
+    Art: ArtAI,
+  },
 ];
 
 const ProjectsSection: FC = () => {
   const [active, setActive] = useState<Project | null>(null);
+
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [active]);
 
   return (
     <section className="relative section-padding py-20 md:py-28">
@@ -193,9 +223,9 @@ const ProjectsSection: FC = () => {
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.6, delay: idx * 0.05 }}
                 whileHover={{ y: -6, scale: 1.01 }}
-                className="text-left group glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors overflow-hidden"
+                className="text-left group glass-effect rounded-2xl border border-white/10 hover:border-champagne/40 transition-colors overflow-hidden flex flex-col h-full justify-start"
               >
-                <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+                <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4 w-full">
                   <div className="flex-1">
                     <h3 className="font-fraunces text-lg sm:text-xl text-ivory mb-1">
                       {title}
@@ -231,56 +261,59 @@ const ProjectsSection: FC = () => {
       </div>
 
       {/* Modal */}
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActive(null)}
-          >
+      {createPortal(
+        <AnimatePresence>
+          {active && (
             <motion.div
-              onClick={(e) => e.stopPropagation()}
-              className="glass-effect max-w-2xl w-full rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto"
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 250, damping: 22 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActive(null)}
             >
-              <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start gap-4">
-                <div className="text-champagne w-full sm:w-40 shrink-0">
-                  <active.Art />
+              <motion.div
+                onClick={(e) => e.stopPropagation()}
+                className="glass-effect max-w-2xl w-full rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto relative z-[10000]"
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 20, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 250, damping: 22 }}
+              >
+                <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start gap-4">
+                  <div className="text-champagne w-full sm:w-40 shrink-0">
+                    <active.Art />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-fraunces text-xl sm:text-2xl text-ivory mb-1">
+                      {active.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-muted-gray mb-1">
+                      {active.subtitle}
+                    </p>
+                    <p className="text-champagne text-xs sm:text-sm mb-3">
+                      {active.organization}
+                    </p>
+                    <p className="text-sm sm:text-base text-muted-gray/90 text-justify">
+                      {active.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-fraunces text-xl sm:text-2xl text-ivory mb-1">
-                    {active.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-muted-gray mb-1">
-                    {active.subtitle}
-                  </p>
-                  <p className="text-champagne text-xs sm:text-sm mb-3">
-                    {active.organization}
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-gray/90 text-justify">
-                    {active.description}
-                  </p>
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex flex-wrap gap-2">
+                  {active.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10 text-muted-gray"
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
-              </div>
-              <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex flex-wrap gap-2">
-                {active.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10 text-muted-gray"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 };

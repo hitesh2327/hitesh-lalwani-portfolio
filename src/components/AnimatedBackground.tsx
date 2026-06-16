@@ -18,7 +18,7 @@ const AnimatedBackground = () => {
 
   return (
     <div
-      className="fixed inset-0 z-0 overflow-hidden"
+      className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
       style={{
         willChange: "transform",
         transform: "translateZ(0)", // GPU acceleration
