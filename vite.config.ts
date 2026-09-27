@@ -7,4 +7,15 @@ export default defineConfig({
   server: {
     allowedHosts: true,
   },
+  build: {
+    rollupOptions: {
+      // Extra entries emit dist/privacy/index.html and dist/terms/index.html,
+      // so /privacy and /terms work on any static host without SPA rewrites.
+      input: {
+        main: "index.html",
+        privacy: "privacy/index.html",
+        terms: "terms/index.html",
+      },
+    },
+  },
 });
